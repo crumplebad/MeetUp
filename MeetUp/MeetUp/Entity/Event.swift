@@ -39,7 +39,7 @@ extension Event {
             self.rsvpNumber = 0
         }
 
-        guard var eventDateTimeEpoc = json["time"] as? Int, var UTCoffset = json["utc_offset"] as? Int else {
+        guard var eventDateTimeEpoc = json["time"] as? Int64, var UTCoffset = json["utc_offset"] as? Int64 else {
             return nil
         }
         eventDateTimeEpoc /= 1_000
