@@ -13,7 +13,7 @@ class MeetUpInteractor: MeetUpInteractorInputProtocol, MeetUpAPIDataManagerOutpu
     weak var presenter: MeetUpInteractorOutputProtocol?
     var APIDataManager: MeetUpAPIDataManagerInputProtocol?
     var localDatamanager: MeetUpLocalDataManagerInputProtocol?
-    var eventsWoFav: [Event] = Array()
+    var eventsWithOutFavorites: [Event] = Array()
     var errorMessage: String?
     var applicationMessage: String?
 
@@ -26,7 +26,7 @@ class MeetUpInteractor: MeetUpInteractorInputProtocol, MeetUpAPIDataManagerOutpu
     func eventsFromServerReturned(_ events: [Event]?) {
         if let events = events {
             if !events.isEmpty {
-                eventsWoFav = events
+                eventsWithOutFavorites = events
                 self.localDatamanager?.getFavEventIDsFromLocal()
             } else {
                 self.presenter?.eventsArrayReturned(Array(), errorMessage: nil, applicationMessage: "No Results!.\n Please make sure your search string is correct format and try again.")
@@ -45,15 +45,15 @@ class MeetUpInteractor: MeetUpInteractorInputProtocol, MeetUpAPIDataManagerOutpu
     }
 
     func favEventIDsFromLocalReturned(_ eventIDs: NSSet) {
-        var eventsWFav: [Event] = Array()
-        for var event in eventsWoFav {
+        var eventsWithFavorites: [Event] = Array()
+        for var event in eventsWithOutFavorites {
             if eventIDs.contains(event.eventId) {
                 event.isFavorite = true
             } else {
                 event.isFavorite = false
             }
-            eventsWFav.append(event)
+            eventsWithFavorites.append(event)
         }
-        self.presenter?.eventsArrayReturned(eventsWFav, errorMessage: nil, applicationMessage: nil)
+        self.presenter?.eventsArrayReturned(eventsWithFavorites, errorMessage: nil, applicationMessage: nil)
     }
 }

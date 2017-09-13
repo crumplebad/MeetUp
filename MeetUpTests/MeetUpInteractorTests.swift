@@ -27,7 +27,7 @@ class MeetUpInteractorTests: XCTestCase {
         let eventA = Event(eventId: "a", eventName: "Aname", groupName: "Agroup", rsvpNumber: 1, isFavorite: false, eventDateTimeString: "DNM")
         let eventB = Event(eventId: "b", eventName: "Bname", groupName: "Bgroup", rsvpNumber: 1, isFavorite: false, eventDateTimeString: "DNM")
 
-        classUnderTest.eventsWoFav = [eventA, eventB]
+        classUnderTest.eventsWithOutFavorites = [eventA, eventB]
         let test = MockPresenter()
         classUnderTest.presenter = test
         classUnderTest.favEventIDsFromLocalReturned(NSSet(array: ["b"]))
