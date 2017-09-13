@@ -39,11 +39,12 @@ extension Event {
             self.rsvpNumber = 0
         }
 
-        guard var eventDateTimeEpoc = json["time"] as? Int, let UTCoffset = json["utc_offset"] as? Int else {
+        guard var eventDateTimeEpoc = json["time"] as? Int, var UTCoffset = json["utc_offset"] as? Int else {
             return nil
         }
-        eventDateTimeEpoc += UTCoffset
         eventDateTimeEpoc /= 1_000
+        UTCoffset /= 1_000
+        eventDateTimeEpoc += UTCoffset
         let eventDateTime: Date = Date(timeIntervalSince1970:TimeInterval(eventDateTimeEpoc))
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM, dd yyyy HH:mm a"
